@@ -18,125 +18,82 @@
 
     <style>
         .box {
-            margin-top: 150px;
+            margin-top: 70px;
             padding: 30px;
             border-radius: 10px;
-            background-color: #1a1919;
+            background-color: white;
         }
-
-        .swal-modal {
-            background-color: #1a1919;
-            border: 3px solid rgb(185, 185, 185);
-
-        }
-
-        .swal-button {
-            padding: 7px 19px;
-            border-radius: 2px;
-            background-color: #1c3da8;
-            font-size: 12px;
-            border: 1px solid #3e549a;
-            text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
-        }
-
-        .swal-overlay {
-            background-color: #2c2c2c;
-        }
-
-        .swal-title {
-            color: white;
-        }
-
-        .swal-text {
-
-            color: rgb(59, 185, 202);
-        }
-
+    
+        
+    
         body,
         html {
             height: 100%;
         }
-
+    
         .bg {
-            padding: 0px;
-            margin: 0px;
-            background-image: url({% static "background1.png" %});
+            display: 'flex';
+    
+            background-image: url({% static "bk1.jpg" %});
             height: 100%;
-            background-position: center;
 
-            background-position-y: 100px;
+  
+            background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
-
-        .header {
-            margin-top: 0px;
-            padding-top: 10px;
-            height: 120px;
-            width: 100%;
-            background-color: #0f0f0f;
-        }
-
-        h1 {
-            color: aliceblue;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-
-        h5 {
-            color: rgb(199, 219, 221);
-            font-weight: bolder;
-        }
-
+    
         form,
         .form-select {
-            background-color: #1a1919;
+            background-color: white;
             color: rgb(0, 188, 212);
         }
-
+    
         .txt {
-            background-color: #1a1919;
+            background-color: white;
             color: rgb(59, 185, 202);
             border-radius: 10px;
             width: 100%;
         }
-
+    
         .btn {
-            color: rgb(0, 253, 105);
-            background-color: rgb(21, 57, 63);
+            color: white;
+            background-color: rgb(59, 185, 202);
             font-weight: bold;
         }
-
+    
         p {
             font-size: 15px;
             color: aliceblue;
-
+    
+        }
+        .header{
+            background-image: url({% static "abcd.png" %});
+            margin-top: 0px;
+            padding-top: 10px;
+            height: 200px;
+            width: 43%;
         }
     </style>
 </head>
 
-<body onload="alert('We don\'t save your data on the server. Thanks &#128519;')">
-    <div class="bg">
+<body >
+    <div class="bg" align="center">
         <div class="header">
-            <h1 class="text text-center">Ai Psych</h1>
-            <p class="text text-center"> - Employ AI for self disovery!</p>
-            </pre>
+            
         </div>
-        <div class="container box col-sm-12 col-lg-8 col-md-8 col-xl-6">
-            <h5 class="text text-center pb-3">Know your stress</h5>
-            <form class="row gy-2 gx-3 align-items-center">
+        <div class="container box col-sm-12 col-lg-8 col-md-8 col-xl-6" style="opacity: 0.75;border-color: black;">
+        
+            <form class="row gy-2 gx-3 align-items-center" >
                 {% csrf_token %}
-                <textarea id="sentence" class="font-monospace col-11 txt" rows=8
-                    placeholder="Express your heart to get your introspection!" required></textarea>
+                <textarea id="sentence" class="font-monospace col-11 txt" rows=8 placeholder="Enter the News Text....."
+                    required></textarea>
                 <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                    <select class="form-select" id="model_name" required>
-                        <option selected>Choose model</option>
-                        <option value="trans_cnn">Transformer + CNN (F1: 81.2%)</option>
-                        <option value="trans_lstm">Transformer + BiLSTM (F1: 82.05%)</option>
-                    </select>
+                    <p style=color:tomato;>**Note: Transformers with CNN model is applying here..</p>
                 </div>
                 <button type="button" onclick="result_api()" class="btn col-sm-12 col-md-4 col-lg-4 col-xl-4">Get
                     Result</button>
-
+        
             </form>
         </div>
     </div>
@@ -144,13 +101,11 @@
     <script>
         function result_api() {
             var sentence = document.getElementById("sentence").value;
-            var model_name = document.getElementById("model_name").value;
+            var model_name = "trans_cnn";
             if (sentence == "") {
                 alert("Text cannot be empty!");
             }
-            else if (model_name == "Choose model") {
-                alert("Select model!")
-            }
+            
             else {
 
                 var base_url = "http://" + window.location.hostname
@@ -174,18 +129,15 @@
                     .then((resp) => resp.data)
                     .then((data) => {
                         confidence = data.confidence
-                        if (data.label == "non-stress")
+                        
                             swal({
-                                title: "Good job!",
-                                text: "You're stress free.\nPredicted with confidence of " + confidence + "%",
-                                icon: "success"
-                            });
-                        else
-                            swal({
-                                title: "Bad luck!",
-                                text: "You're stressed.\nPredicted with confidence of " + confidence + "%",
-                                icon: "warning"
-                            });
+                            title: data.label,
+                           
+                            
+
+
+                        })
+                       
 
                     })
                     .catch((error) => { console.log(error) })

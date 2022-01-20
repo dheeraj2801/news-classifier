@@ -7,9 +7,9 @@ import torch.nn.functional as f
 
 nlp=en_core_web_lg.load()
 
-vocab = torch.load("media/vocab.pt")
+vocab = torch.load("media/vocabulary.pt")
 
-MAX_LENGTH = 72
+MAX_LENGTH = 32
 
 p=nn.Softmax(dim=-1)
 

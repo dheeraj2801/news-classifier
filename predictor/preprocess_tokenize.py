@@ -21,7 +21,7 @@ def tokenizer(sentence):
         token.is_space | token.is_quote | token.is_stop | token.like_num |
         token.like_email | token.like_url | token.is_left_punct |
         token.is_right_punct | token.is_space):
-            tokens.append(str(token))
+            tokens.append(str(token.lemma_))
     return tokens
 def data_maker(sentence):
     sentence = preprocess(sentence)
