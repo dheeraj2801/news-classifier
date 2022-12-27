@@ -18,6 +18,7 @@ class TransformerCNN(nn.Module):
 
         self.embed_dim = 300
 
+# Embedding is the process of converting high-dimensional data to low-dimensional data in the form of a vector in such a way that the two are semantically similar
         self.embedding = nn.Embedding.from_pretrained(
                                 embed_weight, freeze=False)
         

@@ -31,7 +31,7 @@ class Classify(APIView):
                 request.data["sentence"])
             #print(ids,masks,ids.shape,masks.shape)    
             label, confidence = self.predict(request.data["model_name"], ids, masks)
-
+            print(label, confidence)
             return JsonResponse(
                 {
                     "label":label,
@@ -45,26 +45,26 @@ class Classify(APIView):
             })
     def predict(self, model_name, inputs, masks):
 
-        device=torch.device("cpu")
+        device=torch.device("cpu") #Assinging CPU memory and clock speed
         
        
         model=trans_cnn_model
 
-        model.eval()
-        model.to(device)
+        model.eval()                        #Processing the Model
+        model.to(device)                    #Adjusting according to the Systems CPU (According to the Deployed Device)
         prob, target=torch.max(
                             model(
                                     inputs.to(device).type(torch.int),
                                     masks.to(device).type(torch.bool)),
-                            dim=-1)
-        prob=p(prob)
+                            dim=-1)                                     
+        prob=p(prob)                            #Converts the result into probability 0<prob<1
         
        
-        label=label_decoding[target[0].item()]
+        label=label_decoding[target[0].item()]      #Takes highest Probabity item
         
-        device = torch.device("cpu")
-        del model
-        del inputs
-        del masks
-        return label, prob.detach().cpu().item()
+        # device = torch.device("cpu")        
+        del model                               #To utilize the CPU
+        del inputs                              #To remove the previous data
+        del masks                               #To remove the previous data
+        return label, prob.detach().cpu().item()        #Returning the label and the probability values
 

@@ -5,7 +5,7 @@ import numpy as np
 from torch import nn 
 import torch.nn.functional as f
 
-nlp=en_core_web_lg.load()
+nlp=en_core_web_lg.load() #The model (en_core_web_lg) is the largest English model of spaCy with size 788 MB.
 
 vocab = torch.load("media/vocabulary.pt")
 

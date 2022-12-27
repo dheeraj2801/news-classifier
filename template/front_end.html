@@ -52,20 +52,19 @@
             color: rgb(59, 185, 202);
         }
 
-        body,
-        html {
+        body, html {
             height: 100%;
         }
          .bg {
               display: 'flex';
             
             background-image: url('bk1.jpg');
-            background-position: center,
-      background-size: cover,
-      backgroundRepeat: no-repeat,
-      width: '100%',
-      height: '100%',
-      justify-content: center, align-items: center
+            background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: '100%';
+      height: '100%';
+      justify-content: center; align-items: center
            
         }
         form,
@@ -150,7 +149,10 @@
                             .then((resp) => resp.data)
                             .then((data) => {
                                 confidence = data.confidence
-                                
+                                // data = {
+                                //     confidence:95.36,
+                                //     label:"SPORTS"
+                                // }
                                     swal({
                                        
                                         text: "the news category is " + data.label + "%",
@@ -158,9 +160,10 @@
                                   
 
                             })
+                        })
                             .catch((error) => { console.log(error) })
-                    }
                 }
+            }
             </script>
         </body>
         </html>
